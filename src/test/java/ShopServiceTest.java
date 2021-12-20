@@ -12,6 +12,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 public class ShopServiceTest {
     private Map<Item, Long> goods = new HashMap<>();
 
@@ -29,8 +31,8 @@ public class ShopServiceTest {
 
         PurchaseStatus status = shop.makePurchase(order);
 
-        assert status == PurchaseStatus.OK :
-                "Incorrect status after purchase. Expected: " + PurchaseStatus.OK + ", actual: " + status;
+        assertEquals(status, PurchaseStatus.OK,
+                "Incorrect status after purchase");
     }
 
     @Test
@@ -49,9 +51,8 @@ public class ShopServiceTest {
 
         shop.makePurchase(order);
 
-        assert user.getBalance() == expectedUserBalance :
-                "User has insufficient balance. \n Initial user balance: " + userInitialBalance +
-                        "\n User current balance: " + user.getBalance() + "\n Items cost: " + itemsTotalPrice;
+        assertEquals(user.getBalance(), expectedUserBalance,
+                "User has incorrect balance");
     }
 
     private Map<Long, Long> getItemsQuantity() {
